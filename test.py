@@ -17,12 +17,19 @@ class Figure:
     y = 0
 
     figures = [
-        [[1, 5, 9, 13], [4, 5, 6, 7]],
-        [[4, 5, 9, 10], [2, 6, 5, 9]],
-        [[6, 7, 9, 10], [1, 5, 6, 10]],
-        [[1, 2, 5, 9], [0, 4, 5, 6], [1, 5, 9, 8], [4, 5, 6, 10]],
-        [[1, 2, 6, 10], [5, 6, 7, 9], [2, 6, 10, 11], [3, 5, 6, 7]],
-        [[1, 4, 5, 6], [1, 4, 5, 9], [4, 5, 6, 9], [1, 5, 6, 9]],
+        # l
+        [[4, 5, 6, 7], [2, 6, 10, 14], [8, 9, 10, 11], [1, 5, 9, 13]],
+        # Z
+        [[0, 1, 5, 6], [2, 5, 6, 9], [4, 5, 9, 10], [1, 4, 5, 8]],
+        # S
+        [[1, 2, 4, 5], [1, 5, 6, 10], [5, 6, 8, 9], [0, 4, 5, 9]],
+        # J
+        [[0, 4, 5, 6], [1, 2, 5, 9],[4, 5, 6, 10], [1, 5, 8, 9]],
+        # L
+        [[2, 4, 5, 6], [1, 5, 9, 10], [4, 5, 6, 8], [0, 1, 5, 9]],
+        # 
+        [[1, 4, 5, 6], [1, 5, 6, 9], [4, 5, 6, 9], [1, 4, 5, 9]],
+        # O
         [[1, 2, 5, 6]],
     ]
 
@@ -41,7 +48,7 @@ class Figure:
 
 
 class Tetris:
-    level = 2
+    level = 1
     score = 0
     state = "start"
     field = []
@@ -105,11 +112,14 @@ class Tetris:
             self.figure.y -= 1
             self.freeze()
 
+
+
     def freeze(self):
         for i in range(4):
             for j in range(4):
                 if i * 4 + j in self.figure.image():
-                    self.field[i + self.figure.y][j + self.figure.x] = self.figure.color
+                    self.field[i + self.figure.y][j +
+                                                  self.figure.x] = self.figure.color
         self.break_lines()
         self.new_figure()
         if self.intersects():
@@ -144,7 +154,7 @@ pygame.display.set_caption("Tetris")
 # Loop until the user clicks the close button.
 done = False
 clock = pygame.time.Clock()
-fps = 500
+fps = 4
 game = Tetris(20, 10)
 counter = 0
 
@@ -179,14 +189,15 @@ while not done:
                 game.__init__(20, 10)
 
     if event.type == pygame.KEYUP:
-            if event.key == pygame.K_DOWN:
-                pressing_down = False
+        if event.key == pygame.K_DOWN:
+            pressing_down = False
 
     screen.fill(WHITE)
 
     for i in range(game.height):
         for j in range(game.width):
-            pygame.draw.rect(screen, GRAY, [game.x + game.zoom * j, game.y + game.zoom * i, game.zoom, game.zoom], 1)
+            pygame.draw.rect(screen, GRAY, [
+                             game.x + game.zoom * j, game.y + game.zoom * i, game.zoom, game.zoom], 1)
             if game.field[i][j] > 0:
                 pygame.draw.rect(screen, colors[game.field[i][j]],
                                  [game.x + game.zoom * j + 1, game.y + game.zoom * i + 1, game.zoom - 2, game.zoom - 1])
@@ -198,7 +209,8 @@ while not done:
                 if p in game.figure.image():
                     pygame.draw.rect(screen, colors[game.figure.color],
                                      [game.x + game.zoom * (j + game.figure.x) + 1,
-                                      game.y + game.zoom * (i + game.figure.y) + 1,
+                                      game.y + game.zoom *
+                                      (i + game.figure.y) + 1,
                                       game.zoom - 2, game.zoom - 2])
 
     font = pygame.font.SysFont('Calibri', 25, True, False)
