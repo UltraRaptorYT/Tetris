@@ -2,7 +2,7 @@ import pygame
 import random
 
 colors = [
-    (0, 0, 0),
+    (255, 0, 0),
     (120, 37, 179),
     (100, 179, 179),
     (80, 34, 22),
@@ -24,13 +24,22 @@ class Figure:
         # S
         [[1, 2, 4, 5], [1, 5, 6, 10], [5, 6, 8, 9], [0, 4, 5, 9]],
         # J
-        [[0, 4, 5, 6], [1, 2, 5, 9],[4, 5, 6, 10], [1, 5, 8, 9]],
+        [[0, 4, 5, 6], [1, 2, 5, 9], [4, 5, 6, 10], [1, 5, 8, 9]],
         # L
         [[2, 4, 5, 6], [1, 5, 9, 10], [4, 5, 6, 8], [0, 1, 5, 9]],
-        # 
+        #
         [[1, 4, 5, 6], [1, 5, 6, 9], [4, 5, 6, 9], [1, 4, 5, 9]],
         # O
         [[1, 2, 5, 6]],
+    ]
+    figColor = [
+        (255, 0, 255),
+        (255, 0, 255),
+        (255, 0, 255),
+        (255, 0, 255),
+        (255, 0, 255),
+        (255, 0, 255),
+        (255, 0, 255),
     ]
 
     def __init__(self, x, y):
@@ -112,9 +121,8 @@ class Tetris:
             self.figure.y -= 1
             self.freeze()
 
-
-
     def freeze(self):
+        print(self.figure.color)
         for i in range(4):
             for j in range(4):
                 if i * 4 + j in self.figure.image():
@@ -175,7 +183,7 @@ while not done:
         if event.type == pygame.QUIT:
             done = True
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_UP:
+            if event.key == pygame.K_UP or event.key == pygame.K_w:
                 game.rotate()
             if event.key == pygame.K_DOWN:
                 pressing_down = True
